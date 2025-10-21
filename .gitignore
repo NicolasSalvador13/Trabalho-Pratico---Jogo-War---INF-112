@@ -1,0 +1,11 @@
+# Arquivos de compilação
+*.o
+*.out
+war  # Ou o nome do seu executável
+
+# Pasta do VSCode
+.vscode/
+
+# Arquivos temporários do sistema
+*~
+*.swp
