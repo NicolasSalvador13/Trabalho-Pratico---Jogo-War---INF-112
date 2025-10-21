@@ -1,0 +1,27 @@
+IDENTIFICANDO BUG DO PROGRAMA
+
+ordem de leitura da primeira linha do territorios.txt
+
+continentes, territorios, jogadores, objetivos
+
+OK - construtor 
+OK - chamada do construtor
+OK - funcao LerParametrosDoJogo da main
+
+OK - jogo.organizarJogo() 
+	obs: organizarJogo() esta chamando carregarMapa
+OK - correção de carregarMapa
+
+OK - Regular distribuição de territorios
+
+- Iterar para achar mais bugs ou melhorias
+	MELHORIAS:	
+	OK - Melhorar feedback sobre ganhar ou perder ataque
+	OK - Tratar erro imediatamente na hora de digitar nome de territorio no ataque
+	OK - Melhorar mensagens de fim de ataque e inicio de movimentacao
+	
+	BUG:
+	OK - Não consto como dono do territorio na fase de movimentacao, sendo que sou (jogador atual errado)
+	OK - Não acaba a fase de movimentação
+	EM PROGRESSO- Nome composto deu erro na movimentação
+

@@ -1,0 +1,29 @@
+POLIMENTO DO JOGO.CPP
+
+==================================
+Refatoração de entradas do usuário
+==================================
+OK - Método para fazer leitura de char
+OK - Método para fazer leitura de string
+OK - Método para fazer leitura de int
+- Possibilidade de cancelar ataque
+- Sudão, Vietnã e Madagascar tem sempre um erro de posicionamento no mapa
+- No checar informacoes (fase de ataque), é melhor chamar o mapa de guerra
+
+
+
+==================================
+Eliminação de jogadores
+==================================
+- Modularizar processo de eliminação de jogadores
+- Implementar métodos
+
+
+==================================
+Refatoração dos métodos de exército
+==================================
+- Distribuição de exercitos aereos de forma livre
+- BUG CRITICO: conquistei Mackenzie, mas não alterou o dono na hora de mostrar mapa de guerra!
+- Implementar uso correto do polimorfismo
+	(invés de especificar o tipo a partir dos parâmetros)
+	( OU PERGUNTAR JULIO )

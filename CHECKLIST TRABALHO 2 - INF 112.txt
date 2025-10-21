@@ -1,0 +1,35 @@
+CHECKLIST TRABALHO 2 - INF 112
+
+OK - carta.h 
+OK - carta.cpp 
+OK - territorio.h 
+OK - territorio.cpp
+OK - jogador.h
+OK - jogador.cpp
+OK - exercito.h
+OK - exercito.cpp
+OK - exercitoaereo.h
+OK - exercitoaereo.cpp
+OK - exercitoterrestre.h
+OK - exercitoterrestre.cpp
+OK - continente.h
+OK - continente.cpp
+OK - jogo.h
+OK - jogo.cpp
+OK - construtor
+OK - destrutor
+OK - setters/getters
+OK - proximoJogador
+OK - organizarJogo
+OK - distribuirExercitos (deslocamento)
+OK - distribuirExercitos (atribuicao)
+OK - fimDoJogo
+OK - iniciarJogada (reforços)
+	OK - territorio
+	OK - distribuirExercito (metodos de Jogo)
+	OK - ataque (exercito)
+OK - iniciarJogada (ataques)
+OK - iniciarJogada (deslocamento)
+OK - refatorar (apresentacao de informacoes antes do ataque)
+
+EM PROGRESSO - Corrigir bugs

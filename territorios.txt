@@ -1,0 +1,54 @@
+6,40,2,6
+AMERICA DO NORTE, 8
+Alaska: Mackenzie, Vancouver, Vladivostok
+Mackenzie: Alaska, Vancouver, Groenlandia, Ottawa
+Groenlandia: Mackenzie, Labrador, Islandia
+Vancouver: Alaska, Mackenzie, California, Nova York
+Ottawa: Mackenzie, Vancouver, Nova York, Labrador, California
+California: Vancouver, Ottawa, Nova York, Mexico
+Nova York: Labrador, Ottawa, California, Mexico
+Mexico: California, Nova York, Venezuela
+AMERICA DO SUL, 4
+Brasil: Venezuela, Peru, Argentina, Argelia
+Argentina: Peru, Brasil
+Peru: Venezuela, Brasil, Argentina
+Venezuela: Mexico, Peru, Brasil
+EUROPA, 7
+Islandia: Groenlandia, Inglaterra
+Inglaterra: Islandia, Franca, Alemanha, Suecia
+Suecia: Inglaterra, Alemanha, Moscou
+Alemanha: Inglaterra, Franca, Suecia, Polonia
+Polonia: Alemanha, França, Moscou, Oriente Medio, Egito
+Moscou: Suecia, Polonia, Aral, Oms, Oriente Medio
+Franca: Inglaterra, Alemanha, Argelia, Egito
+AFRICA, 6
+Africa do Sul: Madagascar, Congo, Sudão
+Madagascar: Africa do Sul, Sudão
+Congo: Africa do Sul, Argelia, Sudão
+Sudão: Argelia, Congo, Egito, Madagascar, Africa do Sul
+Egito: Sudao, França, Oriente Medio, Argelia, Polonia
+Argelia: Brasil, Franca, Egito, Sudao, Congo
+ASIA, 11
+Oriente Medio: Polonia, Moscou, Aral, India, Egito
+India: Oriente Medio, Aral, China, Vietnã, Sumatria
+Vietnã: India, China, Borneu
+China: India, Vietnã, Mongolia, Tchita, Aral, Vladivostok
+Mongolia: China, Dudinka, Omsk
+Siberia: Tchita, Vladivostok, Dudinka
+Vladivostok: Tchita, Siberia, China, Japao
+Japao: China, Vladivostok
+Dudinka: Moscou, Siberia, Omsk, Mongolia
+Omsk: Dudinka, Moscou, China, Aral, Mongolia
+Aral: Moscou, Oriente Medio, India, China, Omsk
+OCEANIA, 4
+Australia: Nova Guine, Borneu, Sumatria
+Borneu: Australia, Nova Guine, Vietnã
+Nova Guine: Australia, Borneu
+Sumatria: India, Australia
+
+Conquistar a América do Norte e Africa
+Conquistar a Asia e Africa
+Conquistar América do Norte e Oceania
+Conquistar 18 territórios
+Conquistar 24 territórios 
+Conquistar 30 territórios
