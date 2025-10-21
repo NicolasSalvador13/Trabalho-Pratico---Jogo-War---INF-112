@@ -259,14 +259,25 @@ void Jogo::executarChecagemDeInfo() {
 // Metodo auxiliar para executar o ataque
 void Jogo::executarAtaque(Jogador* jogador_da_vez) {
     std::cout << "\n===== NOVO ATAQUE =====\n";
-    std::string nome_origem, nome_destino;
+    std::string nome_origem, nome_destino, input_str;
     int tipo_ataque_int;
     Territorio* origem = nullptr;
     Territorio* destino = nullptr;
+    const std::string CANCELAR_KEYWORD = "cancelar";
 
-    // Loop para obter uma ORIGEM válida
+    // Loop para obter uma ORIGEM válida ou cancelar
     while(true) {
-        nome_origem = obterString("Digite o nome do territorio de origem: ");
+        nome_origem = obterString("Digite o nome do territorio de origem (ou '" + CANCELAR_KEYWORD + "'): ");
+        
+        // Converte para minúsculas para comparação case-insensitive
+        std::string lower_nome_origem = nome_origem;
+        std::transform(lower_nome_origem.begin(), lower_nome_origem.end(), lower_nome_origem.begin(), ::tolower);
+
+        if (lower_nome_origem == CANCELAR_KEYWORD) {
+            std::cout << "\n>> Ataque cancelado pelo usuario.\n";
+            return; // Sai da função executarAtaque
+        }
+
         origem = encontrarTerritorioPorNome(nome_origem);
         if (origem == nullptr) {
             std::cerr << "ERRO: Territorio nao encontrado. Tente novamente.\n";
@@ -277,9 +288,18 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
         }
     }
 
-    // Loop para obter um DESTINO válido
+    // Loop para obter um DESTINO válido ou cancelar
     while(true) {
-        nome_destino = obterString("Digite o nome do territorio de destino: ");
+        nome_destino = obterString("Digite o nome do territorio de destino (ou '" + CANCELAR_KEYWORD + "'): ");
+
+        std::string lower_nome_destino = nome_destino;
+        std::transform(lower_nome_destino.begin(), lower_nome_destino.end(), lower_nome_destino.begin(), ::tolower);
+
+        if (lower_nome_destino == CANCELAR_KEYWORD) {
+            std::cout << "\n>> Ataque cancelado pelo usuario.\n";
+            return; // Sai da função executarAtaque
+        }
+
         destino = encontrarTerritorioPorNome(nome_destino);
         if (destino == nullptr) {
             std::cerr << "ERRO: Territorio nao encontrado. Tente novamente.\n";
@@ -290,18 +310,36 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
         }
     }
 
-    // Loop para obter um TIPO de ataque válido
+    // Loop para obter um TIPO de ataque válido ou cancelar
     while(true) {
-        tipo_ataque_int = obterInt("Digite o tipo de ataque (1 para Terrestre, 2 para Aereo): ");
-        if (tipo_ataque_int == 1 || tipo_ataque_int == 2) {
-            break; // Tipo válido
-        } else {
-            std::cerr << "ERRO: Tipo de ataque invalido. Escolha 1 ou 2.\n";
+        input_str = obterString("Digite o tipo de ataque (1 ou 2) (ou '" + CANCELAR_KEYWORD + "'): ");
+
+        std::string lower_input = input_str;
+        std::transform(lower_input.begin(), lower_input.end(), lower_input.begin(), ::tolower);
+
+        if (lower_input == CANCELAR_KEYWORD) {
+            std::cout << "\n>> Ataque cancelado pelo usuario.\n";
+            return; // Sai da função executarAtaque
+        }
+
+        // Tenta converter a string para inteiro
+        try {
+            tipo_ataque_int = std::stoi(input_str); // Converte string para int
+            if (tipo_ataque_int == 1 || tipo_ataque_int == 2) {
+                break; // Tipo válido
+            } else {
+                std::cerr << "ERRO: Tipo de ataque invalido. Escolha 1 ou 2.\n";
+            }
+        } catch (const std::invalid_argument& ia) {
+            std::cerr << "ERRO: Entrada invalida. Por favor, digite um numero (1 ou 2) ou '" << CANCELAR_KEYWORD << "'.\n";
+        } catch (const std::out_of_range& oor) {
+            std::cerr << "ERRO: Numero fora do intervalo permitido.\n"; // Pouco provável aqui
         }
     }
 
-    // --- Execução do Ataque ---
+    // --- Execução do Ataque --- (Se chegou aqui, todas as entradas são válidas)
     Exercito* unidade_de_ataque = nullptr;
+    std::cout << "\n=> Iniciando ataque de " << nome_origem << " contra " << nome_destino << "...\n";
     if (tipo_ataque_int == 1) {
         unidade_de_ataque = new ExercitoTerrestre("Ataque Terrestre", jogador_da_vez);
     } else {
@@ -313,8 +351,8 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
 
     // Exibe feedback
     std::cout << "\n--- Resultado do Combate ---\n";
-    checarInfoTerritorios(origem->getNome());
-    checarInfoTerritorios(destino->getNome());
+    checarInfoTerritorios(origem->getNome()); // Mostra estado da origem
+    checarInfoTerritorios(destino->getNome()); // Mostra estado do destino
     std::cout << "---------------------------\n";
 }
 
