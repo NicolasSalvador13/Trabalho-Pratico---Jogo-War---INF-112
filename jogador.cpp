@@ -74,6 +74,49 @@ void Jogador::adicionarTerritorio(int n_exercitos, Territorio* territorio) {
 }
 
 
+// Remove determinado territorio do jogador 
+void Jogador::removerTerritorio(Territorio* territorio) {
+    int indice_encontrado = -1; // Inicializa com um valor inválido
+
+    // 1. Encontrar o índice do território a ser removido
+    for (int i = 0; i < _num_territorios; i++) {
+        if (_territorios[i] == territorio) {
+            indice_encontrado = i;
+            break; // Encontrou, pode parar de procurar
+        }
+    }
+
+    // 2. Verificar se o território foi realmente encontrado
+    if (indice_encontrado == -1) {
+        // O território não pertence a este jogador, ou já foi removido.
+        // Você pode adicionar uma mensagem de erro se quiser, mas geralmente
+        // é seguro apenas retornar silenciosamente.
+        // std::cerr << "AVISO: Tentativa de remover territorio nao pertencente ao jogador." << std::endl;
+        return;
+    }
+
+    // 3. Deslocar os elementos para cobrir a lacuna
+    // Move todos os elementos a partir do próximo (indice_encontrado + 1)
+    // uma posição para a esquerda.
+    for (int i = indice_encontrado; i < _num_territorios - 1; i++) {
+        _territorios[i] = _territorios[i + 1];
+    }
+
+    // 4. Decrementar o contador ANTES de limpar o último slot
+    _num_territorios--;
+
+    // 5. (Opcional, mas boa prática) Limpar o último slot agora inválido
+    // Usa o NOVO valor de _num_territorios como índice (que agora está fora dos limites válidos 0 a num-1)
+    // Se _num_territorios era 5 e removemos 1, agora é 4. O último índice válido é 3.
+    // _territorios[4] é o slot que ficou "sobrando".
+    if (_num_territorios < _capacidade_max_territorios) { // Garante que não acessamos fora se array estiver cheio
+         _territorios[_num_territorios] = nullptr;
+    }
+
+}
+
+
+
 // Dobra o tamanho do array de ponteiros com os territorios do jogador
 void Jogador::dobraArrayTerritorios(){
     // Dobra capacidade maxima e armazena em uma variavel

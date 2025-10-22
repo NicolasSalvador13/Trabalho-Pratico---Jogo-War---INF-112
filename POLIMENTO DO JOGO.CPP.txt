@@ -6,6 +6,7 @@ INTERFACE
 - Sudão, Vietnã e Madagascar tem sempre um erro de posicionamento no mapa
 - No checar informacoes (fase de ataque), é melhor chamar o mapa de guerra
 - Mensagem: Digite o tipo de ataque (1 ou 2) (ou 'cancelar') da fase de ataque
+- Mapa de guerra: Objetivo não é secreto
 
 
 ==================================
@@ -13,11 +14,14 @@ BUGS CRITICOS
 ==================================
 - Após conquistas, o dono não é alterado no mapa de guerra.
 
+- Se territorio não faz fronteira com o de origem na movimentação, a fase de movimentação se encerra inesperadamente
+
 
 
 ==================================
 FUNÇÕES
 ==================================
+- Usar vector para facilitar
 - Modularizar processo de eliminação de jogadores
 - Distribuição de exercitos aereos de forma livre
 - Implementar o rand(time(0)) 

@@ -23,7 +23,7 @@ class Jogador {
 
         void setCarta(Carta* carta);
         void adicionarTerritorio(int n_exercitos, Territorio* territorio);
-        
+        void removerTerritorio(Territorio* territorio);
 };  
 
 #endif

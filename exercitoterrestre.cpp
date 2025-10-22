@@ -60,8 +60,17 @@ void ExercitoTerrestre::ataque(Territorio* origem, Territorio* destino) {
             // FEEDBACK AQUI
             std::cout << ">> O territorio " << destino->getNome() << " foi conquistado!\n";
 
+            // Guarda ponteiros dos jogadores envolvidos
+            Jogador* conquistador = origem->getDono();
+            Jogador* perdedor = destino->getDono();
+
             // Troca o dono do territorio
-            destino->setDono(origem->getDono());
+            destino->setDono(conquistador);
+
+            if (perdedor != nullptr) { // Garante que o território tinha um dono
+                perdedor->removerTerritorio(destino); 
+            }
+            conquistador->adicionarTerritorio(0, destino);
 
             // Remove uma tropa do territorio atacante
             origem->removerExercitos(1, origem, "terrestre");
