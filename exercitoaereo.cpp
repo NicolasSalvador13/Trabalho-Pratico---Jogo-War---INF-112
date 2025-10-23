@@ -55,23 +55,30 @@ void ExercitoAereo::ataque(Territorio* origem, Territorio* destino) {
         // Checa se conquistou
         if (destino->getExercitos() == 0) { 
 
-            // Troca o dono do territorio
-            destino->setDono(origem->getDono());
+            // FEEDBACK AQUI
+            std::cout << ">> O territorio " << destino->getNome() << " foi conquistado!\n";
 
             // Guarda ponteiros dos jogadores envolvidos
             Jogador* conquistador = origem->getDono();
             Jogador* perdedor = destino->getDono();
 
+            // Troca o dono do territorio
+            destino->setDono(conquistador);
+
             if (perdedor != nullptr) { // Garante que o território tinha um dono
                 perdedor->removerTerritorio(destino); 
             }
-            conquistador->adicionarTerritorio(0, destino);
+            // Adiciona uma tropa TERRESTRE no novo territorio conquistado
+            conquistador->adicionarTerritorio(1, destino);
+
+            // Adiciona uma tropa AEREA no novo territorio conquistado
+            destino->adicionarExercitos(1, destino, "aereo");
+
+            // Remove uma tropa TERRESTRE no novo territorio conquistado
+            destino->removerExercitos(1, destino, "terrestre");
 
             // Remove uma tropa do territorio atacante
             origem->removerExercitos(1, origem, "aereo");
-
-            // Adiciona uma tropa no novo territorio conquistado
-            destino->adicionarExercitos(1, destino, "aereo");
         }
     }
 }

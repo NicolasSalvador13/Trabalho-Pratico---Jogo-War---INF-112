@@ -8,6 +8,9 @@ INTERFACE
 OK - No checar informacoes (fase de ataque), é melhor chamar o mapa de guerra
 - Mensagem: Digite o tipo de ataque (1 ou 2) (ou 'cancelar') da fase de ataque
 - Mapa de guerra: Objetivo não é secreto
+- Mapa de guerra: Adicionar detalhe ao cabeçalho (continente conquistado ou não)
+- Mapa de guerra: Adicionar fronteiras
+- Aguardar 2 segundos ao finalizar rodada
 
 
 ==================================
@@ -18,7 +21,12 @@ OK - Após conquistas, o dono não é alterado no mapa de guerra.
 
 - Se territorio não faz fronteira com o de origem na movimentação, a fase de movimentação se encerra inesperadamente
 
-- Preciso usar vector, pois acontecem erros inesperados relacionados a alocação dinâmica de memória
+- Vietnã não esta sendo reconhecido a partir do nome
+
+- Erros ortográficos no territorios.txt
+
+- Consertar conquista a partir de ataque aéreo
+(Se atacar o territorio, deve retirar um exercito aereo invés de terrestre)
 
 
 ==================================
