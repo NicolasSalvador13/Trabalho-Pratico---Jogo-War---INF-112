@@ -123,7 +123,7 @@ Jogador* Territorio::getDono() const {
 
 // Retorno o numero de fronteiras
 int Territorio::getNumFronteiras() const {
-    return _num_fronteiras;
+    return _fronteira_atual;
 }
 
 

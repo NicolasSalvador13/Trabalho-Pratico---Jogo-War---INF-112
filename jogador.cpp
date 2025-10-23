@@ -88,10 +88,7 @@ void Jogador::removerTerritorio(Territorio* territorio) {
 
     // 2. Verificar se o território foi realmente encontrado
     if (indice_encontrado == -1) {
-        // O território não pertence a este jogador, ou já foi removido.
-        // Você pode adicionar uma mensagem de erro se quiser, mas geralmente
-        // é seguro apenas retornar silenciosamente.
-        // std::cerr << "AVISO: Tentativa de remover territorio nao pertencente ao jogador." << std::endl;
+        std::cerr << "AVISO: Tentativa de remover territorio nao pertencente ao jogador." << std::endl;
         return;
     }
 

@@ -70,13 +70,13 @@ void ExercitoTerrestre::ataque(Territorio* origem, Territorio* destino) {
             if (perdedor != nullptr) { // Garante que o território tinha um dono
                 perdedor->removerTerritorio(destino); 
             }
-            conquistador->adicionarTerritorio(0, destino);
+            // Adiciona uma tropa no novo territorio conquistado
+            conquistador->adicionarTerritorio(1, destino);
 
             // Remove uma tropa do territorio atacante
             origem->removerExercitos(1, origem, "terrestre");
 
-            // Adiciona uma tropa no novo territorio conquistado
-            destino->adicionarExercitos(1, destino, "terrestre");
+            
         }
     }
 }

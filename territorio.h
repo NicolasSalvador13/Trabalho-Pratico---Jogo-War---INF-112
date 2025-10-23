@@ -8,7 +8,7 @@ class Jogador;
 class Territorio {
     private:
         std::string _nome;
-        const int _num_fronteiras;
+        const int _num_fronteiras;  // Capacidade Maxima
         int _exercitos_aereos;
         int _exercitos_terrestres;
         Jogador* _dono;

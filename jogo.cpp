@@ -891,7 +891,11 @@ void Jogo::checarInfoTerritorios(const std::string& nome_territorio) {
     Territorio** f = t->getFronteiras();
     std::cout << "  Fronteiras: ";
     for (int i = 0; i < t->getNumFronteiras(); i++) {
+        if (f[i] != nullptr) { 
         std::cout << f[i]->getNome() << " ";
+        } else {
+        std::cout << "[Fronteira NULA!] "; // Indica o problema
+        }
     }
     std::cout << "\n";
 }
@@ -1038,7 +1042,7 @@ void Jogo::verMapaDeGuerra(Jogador* jogador) {
             bool pertence = false;
             Territorio** terrs_do_cont = cont->getTerritorios();
             for(int k = 0; k < cont->getNumTerritorios(); k++){
-                if(terrs_do_cont[k] == terr){
+                if(terrs_do_cont[k]->getNome() == terr->getNome()){
                     pertence = true;
                     break;
                 }
