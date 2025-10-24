@@ -117,10 +117,23 @@ void Jogo::setJogadorDaVez(Jogador* jogador) {
 
 // Passa a vez para o proximo jogador, com base no indice
 void Jogo::proximoJogador() {
+    int jogadores_ativos = 0;
+    for(int i = 0; i < _num_jogadores; i++) {
+        if (!_jogadores[i]->estaEliminado()) {
+            jogadores_ativos++;
+        }
+    }
 
-    // Avanca uma posicao no indice do jogador atual dentro do array de jogadores
-    // Resto da divisao garante que esteja dentro do intervalo do numero de jogadores
-    _indice_jogador_atual = (_indice_jogador_atual + 1) % _num_jogadores;
+    // Se só resta 1 jogador ou menos, o jogo acabou, não mude o turno.
+    if (jogadores_ativos <= 1) {
+        return;
+    }
+
+    // Loop do-while para garantir que sempre avance pelo menos 1
+    // e continue procurando até achar alguém não eliminado.
+    do {
+        _indice_jogador_atual = (_indice_jogador_atual + 1) % _num_jogadores;
+    } while (_jogadores[_indice_jogador_atual]->estaEliminado());
 }
 
 
@@ -350,7 +363,17 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
         unidade_de_ataque = new ExercitoAereo("Ataque Aereo", jogador_da_vez);
     }
 
+    Jogador* perdedor_potencial = destino->getDono();
+
     unidade_de_ataque->ataque(origem, destino);
+
+    if (perdedor_potencial != nullptr && perdedor_potencial->getNumTerritorios() == 0 && 
+        !perdedor_potencial->estaEliminado()) 
+    {
+        // O jogador foi eliminado NESTE ATAQUE
+        executaEliminacao(jogador_da_vez, perdedor_potencial);
+    }
+
     delete unidade_de_ataque;
 
     // Exibe feedback
@@ -467,8 +490,20 @@ void Jogo::faseDeReforco(Jogador* jogador_da_vez) {
 // Checa condicao de vitoria e retorna o nome do jogador ganhador, se houver
 std::string Jogo::fimDoJogo() {
 
+    int jogadores_ativos = 0;
+    Jogador* ultimo_jogador_ativo = nullptr;
+
     // Itera sobre cada jogador
     for (int i = 0; i < _num_jogadores; i++) {
+
+        // Ignora jogadores eliminados
+        if (_jogadores[i]->estaEliminado()) {
+            continue;
+        }
+
+        // Se chegou aqui, o jogador está ativo
+        jogadores_ativos++;
+        ultimo_jogador_ativo = _jogadores[i];
 
         // Objetivo 1
         if (_jogadores[i]-> getObjetivo() == "Conquistar a América do Norte e Africa"){
@@ -523,6 +558,12 @@ std::string Jogo::fimDoJogo() {
             if (_jogadores[i]->getNumTerritorios() >= 30) 
                 return _jogadores[i]->getNome();
         }
+    }
+
+    // Nova condição de vitória: Último homem de pé
+    if (jogadores_ativos == 1 && ultimo_jogador_ativo != nullptr) {
+        std::cout << "Todos os oponentes foram eliminados!\n";
+        return ultimo_jogador_ativo->getNome();
     }
 
     return "nao"; // Se nenhum jogador ganhou, retorna "nao"
@@ -1071,4 +1112,21 @@ void Jogo::verMapaDeGuerra(Jogador* jogador) {
         }
     }
     std::cout << std::endl; // Adiciona uma linha extra no final para espaçamento
+}
+
+
+// Método para lidar com a eliminação de um jogador
+void Jogo::executaEliminacao(Jogador* conquistador, Jogador* perdedor) {
+    // Verificação de segurança
+    if (perdedor == nullptr || conquistador == nullptr || perdedor->estaEliminado()) {
+        return;
+    }
+
+    std::cout << "\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
+    std::cout << "ELIMINACAO! " << conquistador->getNome() << " eliminou " << perdedor->getNome() << " do jogo!\n";
+    std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n";
+
+    // Marca o jogador como eliminado
+    perdedor->setEliminado(true);
+
 }

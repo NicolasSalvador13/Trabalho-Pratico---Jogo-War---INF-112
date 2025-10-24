@@ -12,6 +12,7 @@ Jogador::Jogador (std::string nome) :
         // Inicializacao dos demais atributos
         _num_territorios = 0;
         _capacidade_max_territorios = 1;
+        _eliminado = false;
 
         // Ponteiros com nullptr, como boa pratica
         _carta = nullptr;
@@ -149,3 +150,14 @@ Territorio** Jogador::getTerritorios() const {
     return _territorios;
 }
 
+
+// Atualiza status de eliminacao do jogador
+void Jogador::setEliminado(bool status) {
+    _eliminado = status;
+}
+
+
+// Retonar o status de eliminacao do jogador
+bool Jogador::estaEliminado() const {
+    return _eliminado;
+}

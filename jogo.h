@@ -39,6 +39,7 @@ class Jogo {
         void executarAtaque(Jogador* jogador_da_vez);
         void executarChecagemDeInfo();
         void faseDeMovimentacao(Jogador* jogador);
+        void executaEliminacao(Jogador* conquistador, Jogador* perdedor);
 
     public:
         Jogo (int n_jogadores, int n_territorios, int n_continentes, int n_objetivos);

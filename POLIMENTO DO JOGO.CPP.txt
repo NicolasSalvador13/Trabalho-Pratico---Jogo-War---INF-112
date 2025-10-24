@@ -30,7 +30,7 @@ OK - Não consigo ganhar ao checar 24 territorios como objetivo
 ==================================
 FUNÇÕES
 ==================================
-- Modularizar processo de eliminação de jogadores
+OK - Modularizar processo de eliminação de jogadores
 OK - Distribuição de exercitos aereos de forma livre
 - Implementar o rand(time(0)) 
 - Método de remover territorio do continente???

@@ -12,6 +12,8 @@ class Jogador {
         int _capacidade_max_territorios; // Flag para dobrar array de ponteiros
         Carta* _carta;
         Territorio** _territorios;
+        bool _eliminado;
+        
         void dobraArrayTerritorios ();
     public:
         Jogador (std::string nome);
@@ -24,6 +26,9 @@ class Jogador {
         void setCarta(Carta* carta);
         void adicionarTerritorio(int n_exercitos, Territorio* territorio);
         void removerTerritorio(Territorio* territorio);
+
+        void setEliminado(bool status);
+        bool estaEliminado() const;
 };  
 
 #endif
