@@ -21,13 +21,13 @@ OK - Após conquistas, o dono não é alterado no mapa de guerra.
 
 - Se territorio não faz fronteira com o de origem na movimentação, a fase de movimentação se encerra inesperadamente
 
-- Vietnã não esta sendo reconhecido a partir do nome
-
 - Erros ortográficos no territorios.txt
 
 - Consertar conquista a partir de ataque aéreo
 (Se atacar o territorio, deve retirar um exercito aereo invés de terrestre)
 
+- Não consigo ganhar ao checar 24 territorios como objetivo
+(talvez o check seja de ==24 invés de >24)
 
 ==================================
 FUNÇÕES

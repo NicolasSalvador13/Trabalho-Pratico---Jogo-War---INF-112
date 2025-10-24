@@ -48,11 +48,21 @@ void ExercitoTerrestre::ataque(Territorio* origem, Territorio* destino) {
     // Ataque ganha
     else {
 
-        // FEEDBACK AQUI
-        std::cout << ">> Ataque bem-sucedido! O defensor perdeu 1 exercito terrestre em " << destino->getNome() << ".\n";
+        // Remove tropa terrestre do territorio na defesa
+        if (destino->getExercitosTerrestres() > 0){
+            // FEEDBACK AQUI
+            std::cout << ">> Ataque bem-sucedido! O defensor perdeu 1 exercito terrestre em " << destino->getNome() << ".\n";
 
-        // Remove exercito do territorio na defesa
-        destino->removerExercitos(1, destino, "terrestre");
+            // Remove exercito do territorio na defesa
+            destino->removerExercitos(1, destino, "terrestre");
+        }
+        // Remove tropa aérea do territorio na defesa
+        else if (destino->getExercitosAereos() > 0) {
+            std::cout << ">> Ataque bem-sucedido! O defensor perdeu 1 exercito aereo em " << destino->getNome() << ".\n";
+
+            // Remove exercito do territorio na defesa
+            destino->removerExercitos(1, destino, "aereo");
+        }
 
         // Checa se conquistou
         if (destino->getExercitos() == 0) {   
