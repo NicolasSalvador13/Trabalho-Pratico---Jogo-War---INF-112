@@ -4,13 +4,13 @@ POLIMENTO DO JOGO.CPP
 INTERFACE
 ==================================
 - Linux não exibe mapa direito (não é possível scrollar a tela e ver objetivos etc)
-- Sudão, Vietnã e Madagascar tem sempre um erro de posicionamento no mapa
+OK - Sudão, Vietnã e Madagascar tem sempre um erro de posicionamento no mapa
 OK - No checar informacoes (fase de ataque), é melhor chamar o mapa de guerra
 - Mensagem: Digite o tipo de ataque (1 ou 2) (ou 'cancelar') da fase de ataque
-- Mapa de guerra: Objetivo não é secreto
-- Mapa de guerra: Adicionar detalhe ao cabeçalho (continente conquistado ou não)
-- Mapa de guerra: Adicionar fronteiras
-- Aguardar 2 segundos ao finalizar rodada
+OK - Mapa de guerra: Objetivo não é secreto
+OK - Mapa de guerra: Adicionar detalhe ao cabeçalho (continente conquistado ou não)
+OK - Mapa de guerra: Adicionar fronteiras
+OK - Mapa de guerra: Adicionar se jogador foi eliminado ou não
 
 
 ==================================

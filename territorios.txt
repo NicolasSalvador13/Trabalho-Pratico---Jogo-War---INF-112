@@ -22,17 +22,17 @@ Polonia: Alemanha, França, Moscou, Oriente Medio, Egito
 Moscou: Suecia, Polonia, Aral, Oms, Oriente Medio
 Franca: Inglaterra, Alemanha, Argelia, Egito
 AFRICA, 6
-Africa do Sul: Madagascar, Congo, Sudão
-Madagascar: Africa do Sul, Sudão
-Congo: Africa do Sul, Argelia, Sudão
-Sudão: Argelia, Congo, Egito, Madagascar, Africa do Sul
+Africa do Sul: Madagascar, Congo, Sudao
+Madagascar: Africa do Sul, Sudao
+Congo: Africa do Sul, Argelia, Sudao
+Sudao: Argelia, Congo, Egito, Madagascar, Africa do Sul
 Egito: Sudao, França, Oriente Medio, Argelia, Polonia
 Argelia: Brasil, Franca, Egito, Sudao, Congo
 ASIA, 11
 Oriente Medio: Polonia, Moscou, Aral, India, Egito
-India: Oriente Medio, Aral, China, Vietnã, Sumatria
-Vietnã: India, China, Borneu
-China: India, Vietnã, Mongolia, Tchita, Aral, Vladivostok
+India: Oriente Medio, Aral, China, Vietna, Sumatria
+Vietna: India, China, Borneu
+China: India, Vietna, Mongolia, Tchita, Aral, Vladivostok
 Mongolia: China, Dudinka, Omsk
 Siberia: Tchita, Vladivostok, Dudinka
 Vladivostok: Tchita, Siberia, China, Japao
@@ -42,7 +42,7 @@ Omsk: Dudinka, Moscou, China, Aral, Mongolia
 Aral: Moscou, Oriente Medio, India, China, Omsk
 OCEANIA, 4
 Australia: Nova Guine, Borneu, Sumatria
-Borneu: Australia, Nova Guine, Vietnã
+Borneu: Australia, Nova Guine, Vietna
 Nova Guine: Australia, Borneu
 Sumatria: India, Australia
 

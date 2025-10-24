@@ -25,7 +25,8 @@ const std::string RESET = "\033[0m";
 const std::string YELLOW = "\033[1;33m"; // Amarelo em negrito
 const std::string CYAN = "\033[0;36m";
 const std::string GREEN = "\033[0;32m";
-
+const std::string RED = "\033[1;31m";   // Vermelho em negrito
+const std::string WHITE = "\033[0;37m"; // Branco normal para as fronteiras
 
 // Construtor que inicializa atributos constantes
 Jogo::Jogo (int n_jogadores, int n_territorios, int n_continentes, int n_objetivos) :
@@ -329,7 +330,7 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
 
     // Loop para obter um TIPO de ataque válido ou cancelar
     while(true) {
-        input_str = obterString("Digite o tipo de ataque (1 ou 2) (ou '" + CANCELAR_KEYWORD + "'): ");
+        input_str = obterString("Ataque terrestre (1) ou aereo (2) (ou '" + CANCELAR_KEYWORD + "'): ");
 
         std::string lower_input = input_str;
         std::transform(lower_input.begin(), lower_input.end(), lower_input.begin(), ::tolower);
@@ -1053,12 +1054,24 @@ int Jogo::obterInt(const std::string& prompt) {
 }
 
 
-// Metodo auxiliar para apresentar mapa de guerra e sumário de um jogador
+// em jogo.cpp
+
+// Metodo auxiliar para apresentar mapa de guerra e sumário de um jogador (Formato Tabela)
 void Jogo::verMapaDeGuerra(Jogador* jogador) {
+    
+    // ===== PASSO 0: CHECAR SE ESTÁ ELIMINADO =====
+    // <<< Req 4: Adicionar se jogador foi eliminado ou não
+    if (jogador->estaEliminado()) {
+        std::cout << "\n===== " << YELLOW << "STATUS DE " << jogador->getNome() << RESET << " =====\n";
+        std::cout << "\n--- " << RED << "JOGADOR ELIMINADO" << RESET << " ---\n";
+        return; // Não precisa mostrar o resto
+    }
+
     // ===== PASSO 1: CALCULAR OS TOTAIS =====
     int num_territorios = jogador->getNumTerritorios();
     Territorio** territorios_do_jogador = jogador->getTerritorios();
     int total_exercitos = 0, total_aereos = 0, total_terrestres = 0;
+    int continentes_conquistados = 0; // <<< Req 5
 
     for (int i = 0; i < num_territorios; i++) {
         total_exercitos += territorios_do_jogador[i]->getExercitos();
@@ -1066,54 +1079,105 @@ void Jogo::verMapaDeGuerra(Jogador* jogador) {
         total_terrestres += territorios_do_jogador[i]->getExercitosTerrestres();
     }
 
-    // ===== PASSO 2: EXIBIR O CABEÇALHO E O SUMÁRIO =====
+    // <<< Req 5: Calcular continentes conquistados
+    for (int i = 0; i < _num_continentes; i++) {
+        if (jogadorControlaContinente(jogador, _continentes[i]->getNome())) {
+            continentes_conquistados++;
+        }
+    }
+
+    // ===== PASSO 2: EXIBIR O CABEÇALHO E O SUMÁRIO (Com todas as melhorias) =====
     std::cout << "\n===== " << YELLOW << "MAPA DE GUERRA E STATUS DE " << jogador->getNome() << RESET << " =====\n";
 
     std::cout << "\n--- " << YELLOW << "SUMARIO DAS FORCAS" << RESET << " ---\n";
-    std::cout << "  Objetivo Secreto:   " << YELLOW << jogador->getObjetivo() << RESET << "\n"; // Adicionado Objetivo
-    std::cout << "  Exercito Total:     " << GREEN << total_exercitos << RESET << "\n";
-    std::cout << "  Tropas Terrestres:  " << GREEN << total_terrestres << RESET << "\n";
-    std::cout << "  Tropas Aereas:      " << GREEN << total_aereos << RESET << "\n";
+    // <<< Req 1: "Objetivo"
+    std::cout << "  Objetivo:                 " << YELLOW << jogador->getObjetivo() << RESET << "\n";
+    // <<< Req 5: Contagens
+    std::cout << "  Territorios:              " << GREEN << num_territorios << RESET << " de " << _num_territorios << "\n";
+    std::cout << "  Continentes Conquistados: " << GREEN << continentes_conquistados << RESET << " de " << _num_continentes << "\n";
+    std::cout << "  Exercito Total:           " << GREEN << total_exercitos << RESET << "\n";
+    std::cout << "  Tropas Terrestres:        " << GREEN << total_terrestres << RESET << "\n";
+    std::cout << "  Tropas Aereas:            " << GREEN << total_aereos << RESET << "\n";
 
-    // ===== PASSO 3: EXIBIR A LISTA DETALHADA POR CONTINENTE  =====
+    // ===== PASSO 3: EXIBIR A LISTA DETALHADA (LAYOUT DE TABELA) =====
     std::cout << "\n--- " << YELLOW << "DETALHES DOS TERRITORIOS" << RESET << " ---\n";
+
+    // Define larguras das colunas.
+    // <<< Req 6: Aumentei para 25 para nomes longos (como "Africa do Sul")
+    const int NOME_WIDTH = 25; 
+    const int TERRESTRE_WIDTH = 12;
+    const int AEREO_WIDTH = 10;
+    // <<< Req 3: Nova coluna de fronteiras. Precisa ser MUITO larga.
+    const int FRONTEIRA_WIDTH = 60; 
+    const int TOTAL_WIDTH = NOME_WIDTH + TERRESTRE_WIDTH + AEREO_WIDTH + FRONTEIRA_WIDTH;
+
     for (int i = 0; i < _num_continentes; i++) {
         Continente* cont = _continentes[i];
-        bool imprimiu_cabecalho = false; // Flag para imprimir cabeçalho apenas se necessário
+        bool imprimiu_cabecalho_continente = false;
 
-        // Itera sobre os territórios do jogador para ver se algum pertence a este continente
+        // Itera sobre os territórios do jogador
         for (int j = 0; j < num_territorios; j++) {
             Territorio* terr = territorios_do_jogador[j];
             bool pertence = false;
             Territorio** terrs_do_cont = cont->getTerritorios();
             for(int k = 0; k < cont->getNumTerritorios(); k++){
-                if(terrs_do_cont[k]->getNome() == terr->getNome()){
+                if(terrs_do_cont[k] == terr){
                     pertence = true;
                     break;
                 }
             }
 
-            // Se pertence e ainda não imprimimos o cabeçalho deste continente
-            if (pertence && !imprimiu_cabecalho) {
-                std::cout << "\n--- " << YELLOW << cont->getNome() << RESET << " ---\n";
-                std::cout << std::left << std::setw(20) << "Territorio"
-                          << std::setw(12) << "Terrestres"
-                          << std::setw(10) << "Aereos" << std::endl;
-                std::cout << std::setw(42) << std::setfill('-') << "" << std::setfill(' ') << std::endl;
-                imprimiu_cabecalho = true; // Marca que o cabeçalho foi impresso
-            }
-
-            // Se pertence, imprime os detalhes do território
+            // Se pertence ao continente
             if (pertence) {
-                 std::cout << std::left << CYAN << std::setw(20) << terr->getNome() << RESET
-                           << GREEN << std::setw(12) << terr->getExercitosTerrestres() << RESET
-                           << GREEN << std::setw(10) << terr->getExercitosAereos() << RESET << std::endl;
+                // Imprime o cabeçalho do continente (apenas uma vez)
+                if (!imprimiu_cabecalho_continente) {
+                    imprimiu_cabecalho_continente = true;
+                    
+                    // <<< Req 2: Status de Conquista
+                    std::cout << "\n--- " << YELLOW << cont->getNome() << RESET;
+                    if (jogadorControlaContinente(jogador, cont->getNome())) {
+                        std::cout << GREEN << " (CONQUISTADO)" << RESET;
+                    }
+                    std::cout << " ---\n";
+
+                    // Imprime o cabeçalho da tabela
+                    std::cout << std::left 
+                              << std::setw(NOME_WIDTH) << "Territorio" 
+                              << std::setw(TERRESTRE_WIDTH) << "Terrestres" 
+                              << std::setw(AEREO_WIDTH) << "Aereos"
+                              // <<< Req 3: Cabeçalho da Fronteira
+                              << std::setw(FRONTEIRA_WIDTH) << "Fronteiras" 
+                              << std::endl;
+                    // Linha separadora
+                    std::cout << std::setw(TOTAL_WIDTH) << std::setfill('-') << "" << std::setfill(' ') << std::endl;
+                }
+
+                // <<< Req 3: Construir a string de fronteiras
+                std::string fronteiras_str = "";
+                Territorio** f = terr->getFronteiras();
+                int num_fronteiras = terr->getNumFronteiras();
+                for (int f_idx = 0; f_idx < num_fronteiras; f_idx++) {
+                    if (f[f_idx] != nullptr) {
+                        fronteiras_str += f[f_idx]->getNome();
+                        if (f_idx < num_fronteiras - 1) { // Adiciona vírgula se não for a última
+                            fronteiras_str += ", ";
+                        }
+                    }
+                }
+
+                // Imprime a linha de dados do território
+                std::cout << std::left 
+                          << CYAN << std::setw(NOME_WIDTH) << terr->getNome() << RESET
+                          << GREEN << std::setw(TERRESTRE_WIDTH) << terr->getExercitosTerrestres() << RESET
+                          << GREEN << std::setw(AEREO_WIDTH) << terr->getExercitosAereos() << RESET
+                          // <<< Req 3: Imprime a string de fronteiras
+                          << WHITE << std::setw(FRONTEIRA_WIDTH) << fronteiras_str << RESET 
+                          << std::endl;
             }
         }
     }
-    std::cout << std::endl; // Adiciona uma linha extra no final para espaçamento
+    std::cout << std::endl;
 }
-
 
 // Método para lidar com a eliminação de um jogador
 void Jogo::executaEliminacao(Jogador* conquistador, Jogador* perdedor) {
