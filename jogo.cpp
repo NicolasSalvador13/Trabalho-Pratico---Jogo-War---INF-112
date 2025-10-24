@@ -10,7 +10,7 @@
 #include <ctime>
 #include <iomanip>
 #include <limits>   // std::ws (limpar \n e espaços anteriores ao ler com cin)
-#include <cctype>   // tolower(), toupper()
+#include <cctype>   // tolower()
 
 #include "jogador.h"
 #include "territorio.h"
@@ -1054,9 +1054,7 @@ int Jogo::obterInt(const std::string& prompt) {
 }
 
 
-// em jogo.cpp
-
-// Metodo auxiliar para apresentar mapa de guerra e sumário de um jogador (Formato Tabela)
+// Metodo auxiliar para apresentar mapa de guerra e sumário de um jogador 
 void Jogo::verMapaDeGuerra(Jogador* jogador) {
     
     // ===== PASSO 0: CHECAR SE ESTÁ ELIMINADO =====
@@ -1175,9 +1173,14 @@ void Jogo::verMapaDeGuerra(Jogador* jogador) {
                           << std::endl;
             }
         }
+        // Pausa após cada continente, exceto o ultimo
+        if (i < _num_continentes - 1) {
+        pressioneEnterParaContinuar();
+        }
     }
     std::cout << std::endl;
 }
+
 
 // Método para lidar com a eliminação de um jogador
 void Jogo::executaEliminacao(Jogador* conquistador, Jogador* perdedor) {
@@ -1193,4 +1196,13 @@ void Jogo::executaEliminacao(Jogador* conquistador, Jogador* perdedor) {
     // Marca o jogador como eliminado
     perdedor->setEliminado(true);
 
+}
+
+
+// Método auxiliar para apresentar o mapa de guerra por partes
+void Jogo::pressioneEnterParaContinuar() {
+    std::cout << "\n--- Pressione ENTER para continuar ---" << std::flush;
+
+    // Limpa o buffer de novo para garantir que a próxima leitura (obterString, etc.) funcione
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }

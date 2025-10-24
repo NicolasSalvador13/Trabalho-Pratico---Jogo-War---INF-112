@@ -15,6 +15,7 @@ ExercitoTerrestre::ExercitoTerrestre(std::string nome, Jogador* dono) : Exercito
 ExercitoTerrestre::~ExercitoTerrestre() {}
 
 
+// Ataque terrestre
 void ExercitoTerrestre::ataque(Territorio* origem, Territorio* destino) {
     // Tratamento de erros
     // Auto ataque
@@ -90,5 +91,3 @@ void ExercitoTerrestre::ataque(Territorio* origem, Territorio* destino) {
         }
     }
 }
-
-
