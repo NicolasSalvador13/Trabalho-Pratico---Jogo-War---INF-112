@@ -19,7 +19,7 @@ BUGS CRITICOS
 OK - Após conquistas, o dono não é alterado no mapa de guerra.
 [Ao usar o nome como referência para comparação, resolveu o problema]
 
-- Se territorio não faz fronteira com o de origem na movimentação, a fase de movimentação se encerra inesperadamente
+OK - Se territorio não faz fronteira com o de origem na movimentação, a fase de movimentação se encerra inesperadamente
 
 OK - Consertar conquista a partir de ataque aéreo
 (Se atacar o territorio, deve retirar um exercito aereo invés de terrestre)
@@ -30,8 +30,7 @@ OK - Não consigo ganhar ao checar 24 territorios como objetivo
 ==================================
 FUNÇÕES
 ==================================
-- Usar vector para facilitar
 - Modularizar processo de eliminação de jogadores
-- Distribuição de exercitos aereos de forma livre
+OK - Distribuição de exercitos aereos de forma livre
 - Implementar o rand(time(0)) 
 - Método de remover territorio do continente???

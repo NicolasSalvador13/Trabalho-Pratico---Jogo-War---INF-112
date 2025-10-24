@@ -224,6 +224,10 @@ void Jogo::faseDeMovimentacao(Jogador* jogador){
                 std::cerr << "ERRO: Pelo menos 1 exercito deve permanecer na origem.\n";
                 continue;
             }
+            else if (!origem->fazFronteira(destino) && tipo_tropa == 1) {
+                std::cerr << "ERRO: O territorio de destino nao faz fronteira com o de origem. Tente novamente.\n";
+                continue;
+            }
             else break;
         }
     
@@ -791,7 +795,7 @@ void Jogo::distribuirExercitos(int n_exercitos, std::string nome_territ_origem, 
         return;
     }
     // Tentativa de deslocar exercito que nao faz fronteira
-    if (!origem->fazFronteira(destino)) {
+    if (!origem->fazFronteira(destino) && tipo == "terrestre") {
         std::cerr << "O territorio de destino nao faz fronteira com o de origem" << std::endl;
         return; 
     }
