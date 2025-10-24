@@ -3,7 +3,7 @@ POLIMENTO DO JOGO.CPP
 ==================================
 INTERFACE
 ==================================
-- Linux não exibe mapa direito (não é possível scrollar a tela e ver objetivos etc)
+OK - Linux não exibe mapa direito (não é possível scrollar a tela e ver objetivos etc)
 OK - Sudão, Vietnã e Madagascar tem sempre um erro de posicionamento no mapa
 OK - No checar informacoes (fase de ataque), é melhor chamar o mapa de guerra
 - Mensagem: Digite o tipo de ataque (1 ou 2) (ou 'cancelar') da fase de ataque
