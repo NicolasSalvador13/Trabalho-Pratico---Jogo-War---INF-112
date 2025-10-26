@@ -5,6 +5,11 @@
 
 #include "jogo.h"
 
+// Constantes para cores ANSI
+const std::string YELLOW = "\033[1;33m"; // Amarelo em negrito
+const std::string BOLD_WHITE = "\033[1;37m"; // Branco em negrito
+const std::string RESET = "\033[0m";
+
 // --- FUNCAO AUXILIAR ---
 // Le a primeira linha de territorios.txt para obter os parametros do jogo
 // Retorna 'true' se for bem-sucedida, 'false' se houver erro
@@ -40,7 +45,7 @@ int main() {
     srand(time(0));
 
     std::cout <<   "==================================";
-    std::cout << "\n===== BEM-VINDO AO JOGO WAR! =====\n";
+    std::cout << "\n===== " << YELLOW << "BEM-VINDO AO JOGO WAR!" << RESET << "=====\n";
     std::cout <<   "==================================";
 
 
@@ -74,9 +79,9 @@ int main() {
     }
 
     // --- FIM DE JOGO ---
-    std::cout << "\n\n===== FIM DE JOGO! =====\n";
-    std::cout << "O jogador " << ganhador << " cumpriu seu objetivo e venceu a partida!\n";
-    std::cout << "Parabens!\n";
+    std::cout << "\n\n===== " << YELLOW << "FIM DE JOGO!" << RESET << "=====\n";
+    std::cout << BOLD_WHITE << "O jogador " << ganhador << " cumpriu seu objetivo e venceu a partida!\n";
+    std::cout << "Parabens!\n" << RESET;
 
     return 0;
 }
