@@ -17,30 +17,30 @@ class Jogo {
         const int _num_territorios;
         const int _num_continentes;
         const int _num_objetivos;
-        const int BONUS_AEREO_POR_CONTINENTE = 5;
+        static const int BONUS_AEREO_POR_CONTINENTE = 5;
         int _indice_jogador_atual;
         Jogador** _jogadores;
         Territorio** _territorios;
         Continente** _continentes;
         Carta** _cartas;
         void carregarMapa(const std::string &arquivo_territorios);
-        Territorio* encontrarTerritorioPorNome(const std::string &nome_do_territorio);
-        bool jogadorControlaContinente(Jogador* jogador, const std::string& nome_continente);
-        void checarInfoTerritorios(const std::string& nome_territorio);
-        Jogador* encontrarJogadorPorNome(const std::string &nome_do_jogador);
-        Continente* encontrarContinentePorNome(const std::string& nome_continente);
-        char obterConfirmacao(const std::string& prompt); // Le do usuario ('s' ou 'n')
-        int obterInt(const std::string& prompt);
-        void verMapaDeGuerra (Jogador* jogador);
-        std::string obterString (const std::string& prompt); // Le uma string valida (nao vazia)
+        Territorio* encontrarTerritorioPorNome(const std::string &nome_do_territorio) const;
+        bool jogadorControlaContinente(Jogador* jogador, const std::string& nome_continente) const;
+        void checarInfoTerritorios(const std::string& nome_territorio) const;
+        Jogador* encontrarJogadorPorNome(const std::string &nome_do_jogador) const;
+        Continente* encontrarContinentePorNome(const std::string& nome_continente) const;
+        char obterConfirmacao(const std::string& prompt) const; // Le do usuario ('s' ou 'n')
+        int obterInt(const std::string& prompt) const;  // Le inteiro valido
+        void verMapaDeGuerra (Jogador* jogador) const;  // Mostra mapa de guerra
+        std::string obterString (const std::string& prompt) const; // Le uma string valida (nao vazia)
         void faseDeReforco(Jogador* jogador_da_vez);
         void posicionarReforcos(Jogador* jogador, int quantidade_total, const std::string& tipo_tropa);
         void faseDeAtaque(Jogador* jogador_da_vez);
         void executarAtaque(Jogador* jogador_da_vez);
-        void executarChecagemDeInfo();
+        void executarChecagemDeInfo() const;
         void faseDeMovimentacao(Jogador* jogador);
         void executaEliminacao(Jogador* conquistador, Jogador* perdedor);
-        void pressioneEnterParaContinuar();
+        void pressioneEnterParaContinuar() const;   // Pausa na visualizacao do mapa de guerra
 
     public:
         Jogo (int n_jogadores, int n_territorios, int n_continentes, int n_objetivos);

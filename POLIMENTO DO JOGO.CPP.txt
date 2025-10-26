@@ -6,7 +6,7 @@ INTERFACE
 OK - Linux não exibe mapa direito (não é possível scrollar a tela e ver objetivos etc)
 OK - Sudão, Vietnã e Madagascar tem sempre um erro de posicionamento no mapa
 OK - No checar informacoes (fase de ataque), é melhor chamar o mapa de guerra
-- Mensagem: Digite o tipo de ataque (1 ou 2) (ou 'cancelar') da fase de ataque
+OK - Mensagem: Digite o tipo de ataque (1 ou 2) (ou 'cancelar') da fase de ataque
 OK - Mapa de guerra: Objetivo não é secreto
 OK - Mapa de guerra: Adicionar detalhe ao cabeçalho (continente conquistado ou não)
 OK - Mapa de guerra: Adicionar fronteiras
@@ -32,5 +32,25 @@ FUNÇÕES
 ==================================
 OK - Modularizar processo de eliminação de jogadores
 OK - Distribuição de exercitos aereos de forma livre
-- Implementar o rand(time(0)) 
-- Método de remover territorio do continente???
+OK - Implementar o rand(time(0)) 
+OK - Método de remover territorio do continente???
+
+==================================
+COMENTÁRIOS
+==================================
+OK - jogo.cpp
+OK - jogo.h
+OK - exercitoterrestre.cpp
+OK - exercitoterrestre.h
+OK - exercitoaereo.cpp
+OK - exercitoaereo.h
+OK - exercito.cpp
+OK - exercito.h
+OK - continente.cpp
+OK - continente.h
+OK - carta.cpp
+OK - carta.h
+OK - territorio.cpp
+OK - territorio.h
+OK - jogador.h
+OK - jogador.cpp

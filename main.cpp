@@ -5,7 +5,7 @@
 
 #include "jogo.h"
 
-// --- FUNÇÃO AUXILIAR ---
+// --- FUNCAO AUXILIAR ---
 // Le a primeira linha de territorios.txt para obter os parametros do jogo
 // Retorna 'true' se for bem-sucedida, 'false' se houver erro
 bool lerParametrosDoJogo(int& num_territorios, int& num_continentes, int& num_jogadores, int& num_objetivos) {
@@ -36,20 +36,24 @@ bool lerParametrosDoJogo(int& num_territorios, int& num_continentes, int& num_jo
 
 // --- FUNCAO PRINCIPAL ---
 int main() {
+    // Garante aleatoriedade do metodo rolarDados()
+    srand(time(0));
+
     std::cout <<   "==================================";
     std::cout << "\n===== BEM-VINDO AO JOGO WAR! =====\n";
     std::cout <<   "==================================";
 
 
-    // --- ETAPA 1: CONFIGURACAO INICIAL ---
+    // --- CONFIGURACAO INICIAL ---
     int num_territorios, num_continentes, num_jogadores, num_objetivos;
 
     // Tenta ler os parametros do arquivo
+    // Isso garante uma chamada correta do construtor do Jogo
     if (!lerParametrosDoJogo(num_territorios, num_continentes, num_jogadores, num_objetivos)) {
         return 1; // Encerra se o arquivo nao puder ser lido
     }
 
-    // --- ETAPA 2: CRIACAO E ORGANIZACAO DO JOGO ---
+    // --- CRIACAO E ORGANIZACAO DO JOGO ---
 
     // Cria o objeto Jogo com os parametros corretos
     Jogo war(num_jogadores, num_territorios, num_continentes, num_objetivos);
@@ -58,7 +62,7 @@ int main() {
     war.organizarJogo();
     std::cout << "O jogo esta pronto para comecar!\n";
 
-    // --- ETAPA 3: LOOP PRINCIPAL DO JOGO ---
+    // --- LOOP PRINCIPAL DO JOGO ---
 
     // String para armazenar nome do ganhador
     std::string ganhador;
@@ -69,7 +73,7 @@ int main() {
         war.iniciarJogada(war.getJogadorDaVez());
     }
 
-    // --- ETAPA 4: FIM DE JOGO ---
+    // --- FIM DE JOGO ---
     std::cout << "\n\n===== FIM DE JOGO! =====\n";
     std::cout << "O jogador " << ganhador << " cumpriu seu objetivo e venceu a partida!\n";
     std::cout << "Parabens!\n";

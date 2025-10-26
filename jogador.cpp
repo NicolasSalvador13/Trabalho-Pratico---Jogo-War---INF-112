@@ -8,15 +8,8 @@
 
 // Construtor, que inicializa atributo constante
 Jogador::Jogador (std::string nome) :
-    _nome(nome) {
-        // Inicializacao dos demais atributos
-        _num_territorios = 0;
-        _capacidade_max_territorios = 1;
-        _eliminado = false;
-
-        // Ponteiros com nullptr, como boa pratica
-        _carta = nullptr;
-
+    _nome(nome), _num_territorios(0), _capacidade_max_territorios(1), _eliminado(false), _carta(nullptr){
+        
         // Alocacao dinamica de uma posicao do array de ponteiros
         _territorios = new Territorio* [_capacidade_max_territorios];
         _territorios[0] = nullptr;
@@ -77,9 +70,9 @@ void Jogador::adicionarTerritorio(int n_exercitos, Territorio* territorio) {
 
 // Remove determinado territorio do jogador 
 void Jogador::removerTerritorio(Territorio* territorio) {
-    int indice_encontrado = -1; // Inicializa com um valor inválido
+    int indice_encontrado = -1; // Inicializa com um valor invalido
 
-    // 1. Encontrar o índice do território a ser removido
+    // Encontrar o indice do território a ser removido
     for (int i = 0; i < _num_territorios; i++) {
         if (_territorios[i] == territorio) {
             indice_encontrado = i;
@@ -87,27 +80,23 @@ void Jogador::removerTerritorio(Territorio* territorio) {
         }
     }
 
-    // 2. Verificar se o território foi realmente encontrado
+    // Verificar se o territorio foi realmente encontrado
     if (indice_encontrado == -1) {
         std::cerr << "AVISO: Tentativa de remover territorio nao pertencente ao jogador." << std::endl;
         return;
     }
 
-    // 3. Deslocar os elementos para cobrir a lacuna
-    // Move todos os elementos a partir do próximo (indice_encontrado + 1)
-    // uma posição para a esquerda.
+    // Deslocar os elementos para cobrir a lacuna
+    // Move todos os elementos a partir do próximo (indice_encontrado + 1) uma posição para a esquerda.
     for (int i = indice_encontrado; i < _num_territorios - 1; i++) {
         _territorios[i] = _territorios[i + 1];
     }
 
-    // 4. Decrementar o contador ANTES de limpar o último slot
+    // Decrementar o contador antes de limpar o ultimo slot
     _num_territorios--;
 
-    // 5. (Opcional, mas boa prática) Limpar o último slot agora inválido
-    // Usa o NOVO valor de _num_territorios como índice (que agora está fora dos limites válidos 0 a num-1)
-    // Se _num_territorios era 5 e removemos 1, agora é 4. O último índice válido é 3.
-    // _territorios[4] é o slot que ficou "sobrando".
-    if (_num_territorios < _capacidade_max_territorios) { // Garante que não acessamos fora se array estiver cheio
+    // Limpar o último slot agora invalido
+    if (_num_territorios < _capacidade_max_territorios) { // Garante que nAo acessamos fora se array estiver cheio
          _territorios[_num_territorios] = nullptr;
     }
 

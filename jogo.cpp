@@ -118,20 +118,24 @@ void Jogo::setJogadorDaVez(Jogador* jogador) {
 
 // Passa a vez para o proximo jogador, com base no indice
 void Jogo::proximoJogador() {
+    
+    // Contagem de jogadores ativos
     int jogadores_ativos = 0;
+
+    // Itera sobre jogadores ativos e incrementa contador
     for(int i = 0; i < _num_jogadores; i++) {
         if (!_jogadores[i]->estaEliminado()) {
             jogadores_ativos++;
         }
     }
 
-    // Se só resta 1 jogador ou menos, o jogo acabou, não mude o turno.
+    // Se so resta 1 jogador ou menos, o jogo acabou, nao mude o turno
     if (jogadores_ativos <= 1) {
         return;
     }
 
     // Loop do-while para garantir que sempre avance pelo menos 1
-    // e continue procurando até achar alguém não eliminado.
+    // e continue procurando ate achar alguem nao eliminado
     do {
         _indice_jogador_atual = (_indice_jogador_atual + 1) % _num_jogadores;
     } while (_jogadores[_indice_jogador_atual]->estaEliminado());
@@ -194,12 +198,12 @@ void Jogo::faseDeMovimentacao(Jogador* jogador){
             std::cout << "Digite a quantidade de exercitos: ";
             std::cin >> qtd_exercitos;
 
-            // VERIFICA SE A LEITURA DOS NÚMEROS FALHOU (ex: usuário digitou uma letra)
+            // VERIFICA SE A LEITURA DOS NUMEROS FALHOU (ex: usuario digitou uma letra)
             if (std::cin.fail()) {
                 std::cerr << "ERRO: Entrada numerica invalida. Tente novamente.\n";
                 std::cin.clear(); // Limpa o estado de erro do cin
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descarta a linha inválida
-                continue; // Volta para o início do loop de validação
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descarta a linha invalida
+                continue; // Volta para o inicio do loop de validacao
             }
 
             // --- Validacao e Preparacao ---
@@ -208,7 +212,7 @@ void Jogo::faseDeMovimentacao(Jogador* jogador){
 
             if (tipo_tropa != 1 && tipo_tropa != 2) {
                 std::cerr << "ERRO: Tipo de tropa invalida. Tente novamente.\n";
-                continue;
+                continue; // Volta para o inicio do loop while
             }
             else if (qtd_exercitos < 1) {
                 std::cerr << "ERRO: Quantidade de exercitos invalida. Tente novamente.\n";
@@ -216,11 +220,11 @@ void Jogo::faseDeMovimentacao(Jogador* jogador){
             }
             else if (origem == nullptr || destino == nullptr) {
                 std::cerr << "ERRO: Territorio de origem ou destino invalido. Tente novamente.\n";
-                continue; // Volta para o inicio do loop while
+                continue; 
             }
             else if (origem->getDono() != jogador) {
                 std::cerr << "ERRO: Voce nao e o dono do territorio de origem. Tente novamente.\n";
-                continue; // Volta para o inicio do loop while
+                continue; 
             }
             else if (destino->getDono() != jogador) {
                 std::cerr << "ERRO: Voce nao e o dono do territorio de destino. Tente novamente.\n";
@@ -255,10 +259,13 @@ void Jogo::faseDeMovimentacao(Jogador* jogador){
 
 
 // Metodo auxiliar para executar checagem de informacoes
-void Jogo::executarChecagemDeInfo() {
+void Jogo::executarChecagemDeInfo() const {
+
+    // Informacoes do territorio = 1, do jogador = 2
     int tipo_info = 0;
     tipo_info = obterInt("Checar info de Territorio (1) ou Jogador (2)? ");
     
+    // Checa as informacoes solicitadas
     if (tipo_info == 1) {
         std::string nome_t = obterString("Digite o nome do territorio: ");
         checarInfoTerritorios(nome_t);
@@ -283,17 +290,17 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
     Territorio* destino = nullptr;
     const std::string CANCELAR_KEYWORD = "cancelar";
 
-    // Loop para obter uma ORIGEM válida ou cancelar
+    // Loop para obter uma ORIGEM valida ou cancelar
     while(true) {
         nome_origem = obterString("Digite o nome do territorio de origem (ou '" + CANCELAR_KEYWORD + "'): ");
         
-        // Converte para minúsculas para comparação case-insensitive
+        // Converte para minusculas para comparacao 
         std::string lower_nome_origem = nome_origem;
         std::transform(lower_nome_origem.begin(), lower_nome_origem.end(), lower_nome_origem.begin(), ::tolower);
 
         if (lower_nome_origem == CANCELAR_KEYWORD) {
             std::cout << "\n>> Ataque cancelado pelo usuario.\n";
-            return; // Sai da função executarAtaque
+            return; // Sai da funcao executarAtaque
         }
 
         origem = encontrarTerritorioPorNome(nome_origem);
@@ -302,11 +309,11 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
         } else if (origem->getDono() != jogador_da_vez) {
             std::cerr << "ERRO: Voce nao e o dono deste territorio. Tente novamente.\n";
         } else {
-            break; // Origem válida
+            break; // Origem valida
         }
     }
 
-    // Loop para obter um DESTINO válido ou cancelar
+    // Loop para obter um DESTINO valido ou cancelar
     while(true) {
         nome_destino = obterString("Digite o nome do territorio de destino (ou '" + CANCELAR_KEYWORD + "'): ");
 
@@ -315,7 +322,7 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
 
         if (lower_nome_destino == CANCELAR_KEYWORD) {
             std::cout << "\n>> Ataque cancelado pelo usuario.\n";
-            return; // Sai da função executarAtaque
+            return; // Sai da funcao executarAtaque
         }
 
         destino = encontrarTerritorioPorNome(nome_destino);
@@ -324,11 +331,11 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
         } else if (destino->getDono() == jogador_da_vez) {
             std::cerr << "ERRO: Voce nao pode atacar seu proprio territorio. Tente novamente.\n";
         } else {
-            break; // Destino válido
+            break; // Destino valido
         }
     }
 
-    // Loop para obter um TIPO de ataque válido ou cancelar
+    // Loop para obter um TIPO de ataque valido ou cancelar
     while(true) {
         input_str = obterString("Ataque terrestre (1) ou aereo (2) (ou '" + CANCELAR_KEYWORD + "'): ");
 
@@ -337,25 +344,25 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
 
         if (lower_input == CANCELAR_KEYWORD) {
             std::cout << "\n>> Ataque cancelado pelo usuario.\n";
-            return; // Sai da função executarAtaque
+            return; // Sai da funcao executarAtaque
         }
 
         // Tenta converter a string para inteiro
         try {
             tipo_ataque_int = std::stoi(input_str); // Converte string para int
             if (tipo_ataque_int == 1 || tipo_ataque_int == 2) {
-                break; // Tipo válido
+                break; // Tipo valido
             } else {
                 std::cerr << "ERRO: Tipo de ataque invalido. Escolha 1 ou 2.\n";
             }
         } catch (const std::invalid_argument& ia) {
             std::cerr << "ERRO: Entrada invalida. Por favor, digite um numero (1 ou 2) ou '" << CANCELAR_KEYWORD << "'.\n";
         } catch (const std::out_of_range& oor) {
-            std::cerr << "ERRO: Numero fora do intervalo permitido.\n"; // Pouco provável aqui
+            std::cerr << "ERRO: Numero fora do intervalo permitido.\n"; 
         }
     }
 
-    // --- Execução do Ataque --- (Se chegou aqui, todas as entradas são válidas)
+    // --- Execucao do Ataque --- (Se chegou aqui, todas as entradas são validas)
     Exercito* unidade_de_ataque = nullptr;
     std::cout << "\n=> Iniciando ataque de " << nome_origem << " contra " << nome_destino << "...\n";
     if (tipo_ataque_int == 1) {
@@ -389,16 +396,17 @@ void Jogo::executarAtaque(Jogador* jogador_da_vez) {
 void Jogo::faseDeAtaque(Jogador* jogador_da_vez) {
     std::cout << "\n===== FASE DE ATAQUE =====\n";
     
+    // Loop para repetir o ataque/checar info ate ir para prox fase (movimentacao)
     while (true) {
         char acao = '\0';
         std::cout << "\nDeseja (a)tacar, (c)hecar informacoes ou (p)assar para a proxima fase? ";
         std::cin >> acao;
         
-        // Limpa o buffer para a próxima leitura (especialmente getline)
+        // Limpa o buffer para a proxima leitura (especialmente getline)
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if (acao == 'p' || acao == 'P') {
-            break; // Passa para a fase de movimentação
+            break; // Passa para a fase de movimentacao
         } 
         else if (acao == 'c' || acao == 'C') {
             executarChecagemDeInfo();
@@ -417,7 +425,7 @@ void Jogo::faseDeAtaque(Jogador* jogador_da_vez) {
 void Jogo::posicionarReforcos(Jogador* jogador, int quantidade_total, const std::string& tipo_tropa) {
     int tropas_para_posicionar = quantidade_total;
     
-    // Adiciona uma verificação para pular o loop se não houver tropas para posicionar
+    // Adiciona uma verificacao para pular o loop se nao houver tropas para posicionar
     if (tropas_para_posicionar == 0) {
         std::cout << "\nVoce nao tem tropas do tipo '" << tipo_tropa << "' para posicionar.\n";
         return;
@@ -425,10 +433,12 @@ void Jogo::posicionarReforcos(Jogador* jogador, int quantidade_total, const std:
 
     std::cout << "\n===== ADICIONANDO TROPAS DO TIPO: " << tipo_tropa << " =====\n";
 
+    // Loop para posicionar enquanto restarem tropas
     while (tropas_para_posicionar > 0) {
         int qtd;
         std::string nome_territorio;
         
+        // Loop para validacao de entradas
         while (true) {
             std::cout << "Restam " << tropas_para_posicionar << " exercitos do tipo '" << tipo_tropa << "'" << std::endl;
             qtd = obterInt("Informe a quantidade: ");
@@ -443,10 +453,11 @@ void Jogo::posicionarReforcos(Jogador* jogador, int quantidade_total, const std:
             } else if (t->getDono() != jogador) { 
                 std::cerr << "ERRO: Voce nao e o dono deste territorio\n";
             } else {
-                break; // Input válido
+                break; // Input valido
             }
         }
         
+        // Execucao da distribuicao e atualizacao das tropas restantes a posicionar
         distribuirExercitos(qtd, nome_territorio, jogador, tipo_tropa);
         tropas_para_posicionar -= qtd;
     }
@@ -480,10 +491,10 @@ void Jogo::faseDeReforco(Jogador* jogador_da_vez) {
     std::cout << "Voce tem " << reforcos_terrestres << " exercitos terrestres e " 
               << reforcos_aereos << " aereos para posicionar" << std::endl;
 
-    // Chama o método auxiliar para as tropas terrestres
+    // Chama o metodo auxiliar para as tropas terrestres
     posicionarReforcos(jogador_da_vez, reforcos_terrestres, "terrestre");
 
-    // Chama o mesmo método auxiliar para as tropas aéreas
+    // Chama o mesmo metodo auxiliar para as tropas aereas
     posicionarReforcos(jogador_da_vez, reforcos_aereos, "aereo");
 }
 
@@ -502,7 +513,7 @@ std::string Jogo::fimDoJogo() {
             continue;
         }
 
-        // Se chegou aqui, o jogador está ativo
+        // Se chegou aqui, o jogador esta ativo
         jogadores_ativos++;
         ultimo_jogador_ativo = _jogadores[i];
 
@@ -561,7 +572,7 @@ std::string Jogo::fimDoJogo() {
         }
     }
 
-    // Nova condição de vitória: Último homem de pé
+    // Ultimo jogador ativo
     if (jogadores_ativos == 1 && ultimo_jogador_ativo != nullptr) {
         std::cout << "Todos os oponentes foram eliminados!\n";
         return ultimo_jogador_ativo->getNome();
@@ -618,7 +629,7 @@ void Jogo::organizarJogo() {
             // Atribui a carta _cartas[i] diretamente ao jogador _jogadores[i]
             _jogadores[i]->setCarta(_cartas[i]);
         } else {
-            // Caso de erro: não há cartas de objetivo suficientes para todos os jogadores.
+            // Caso de erro: não ha cartas de objetivo suficientes para todos os jogadores
             std::cerr << "AVISO: Nao ha cartas de objetivo suficientes para todos os jogadores.\n";
         }
     }
@@ -638,7 +649,7 @@ void Jogo::carregarMapa(const std::string &arquivo_territorios)
     }
 
     string linha;
-    int tamanho_das_entradas[4]; // contem o numero de continentes, territórios, jogadores e objetivos respectivamente
+    int tamanho_das_entradas[4]; // contem o numero de continentes, territorios, jogadores e objetivos respectivamente
 
     if (getline(arquivo, linha))
     {
@@ -654,18 +665,18 @@ void Jogo::carregarMapa(const std::string &arquivo_territorios)
         }
     }
 
-    string continentes[tamanho_das_entradas[0]];                                // Lista de continentes, você pode substituir o local em que está populando esse array pelo método que cria um continente na classe continente
-    string territorios[tamanho_das_entradas[1]];                                // Lista de territórios, você pode substituir o local em que está populando esse array pelo método que cria um território na classe território
-    int numero_de_jogadores = tamanho_das_entradas[2];                          // Número de jogadores, você irá utilizar essa informação no contrutor da classe Jogo
-    int numero_de_territorios_por_continente[tamanho_das_entradas[0]];          // Para facilitar a inserção dos territórios na classe continente você pode utilizar esse array como referência
-    string objetivos[tamanho_das_entradas[3]];                                  // Lista de objetivos que irão definir se um jogador venceu o jogo ou não
-    int contador_territorios = 0;                                               // Contador para facilitar o controle da inserção dos territórios nos arrays (territorios e fronteiras)
-    string **fronteiras_por_territorio = new string *[tamanho_das_entradas[1]]; // Matriz com as fronteiras de cada território, você pode inserir diretamente na classe territórios se preferir
-    int numero_de_fronteiras_por_territorio[tamanho_das_entradas[1]];           // Para facilitar a inserção das fronteiras na classe território você pode utilizar esse array como referência
+    string continentes[tamanho_das_entradas[0]];                                
+    string territorios[tamanho_das_entradas[1]];                                
+    int numero_de_jogadores = tamanho_das_entradas[2];                          
+    int numero_de_territorios_por_continente[tamanho_das_entradas[0]];          
+    string objetivos[tamanho_das_entradas[3]];                                  
+    int contador_territorios = 0;                                              
+    string **fronteiras_por_territorio = new string *[tamanho_das_entradas[1]]; 
+    int numero_de_fronteiras_por_territorio[tamanho_das_entradas[1]];           
 
     int contador_continente = 0;
     int contador_objetivos = 0;
-    while (getline(arquivo, linha)) // Leitura feita linha a linha, no caso aqui a leitura que está sendo feita é a da primeira linha
+    while (getline(arquivo, linha)) // Leitura feita linha a linha, no caso aqui a leitura que está sendo feita e a da primeira linha
     {
         string continente, numero_de_territorios;
         if (linha.find(':') == string::npos && linha.find(',') != string::npos)
@@ -716,8 +727,7 @@ void Jogo::carregarMapa(const std::string &arquivo_territorios)
     arquivo.close();
 
     // ========================================================================
-    // ETAPA 1: CRIAÇÃO DOS OBJETOS PRINCIPAIS
-    // Usamos os dados dos arrays temporários para instanciar os objetos do jogo.
+    // ETAPA 1: CRIACAO DOS OBJETOS PRINCIPAIS
     // ========================================================================
 
     // Cria os objetos Continente e os armazena no atributo da classe Jogo
@@ -736,50 +746,48 @@ void Jogo::carregarMapa(const std::string &arquivo_territorios)
     }
 
     // ========================================================================
-    // ETAPA 2: ASSOCIAÇÃO ENTRE OS OBJETOS (LIGAÇÕES)
-    // Agora que todos os objetos existem, podemos conectar os ponteiros.
+    // ETAPA 2: ASSOCIACAO ENTRE OS OBJETOS (LIGACOES)
     // ========================================================================
 
-    // --- Ligando Territórios aos seus Continentes ---
-    // Usamos um contador global para percorrer a lista de territórios,
-    // já que o arquivo os agrupa por continente.
+    // --- Ligando Territorios aos seus Continentes ---
+    // Usamos um contador global para percorrer a lista de territorios, ja que o arquivo os agrupa por continente
     int contador_global_territorios = 0;
     for (int i = 0; i < _num_continentes; i++) {
         // Pega o ponteiro para o continente atual
         Continente* continente_atual = _continentes[i];
         
-        // Pega o número de territórios que pertencem a este continente
+        // Pega o numero de territorios que pertencem a este continente
         int territorios_neste_continente = numero_de_territorios_por_continente[i];
 
-        // Adiciona a quantidade correta de territórios da lista principal ao continente
+        // Adiciona a quantidade correta de territorios da lista principal ao continente
         for (int j = 0; j < territorios_neste_continente; j++) {
             Territorio* territorio_para_adicionar = _territorios[contador_global_territorios];
             continente_atual->adicionarTerritorio(territorio_para_adicionar);
-            contador_global_territorios++; // Avança para o próximo território na lista global
+            contador_global_territorios++; // Avança para o proximo territorio na lista global
         }
     }
 
-    // --- Ligando Territórios às suas Fronteiras ---
+    // --- Ligando Territorios as suas Fronteiras ---
     for (int i = 0; i < _num_territorios; i++) {
-        // Pega o ponteiro para o território de origem
+        // Pega o ponteiro para o territorio de origem
         Territorio* territorio_origem = _territorios[i];
 
-        // Pega o número de fronteiras que ele possui
+        // Pega o numero de fronteiras que ele possui
         int num_fronteiras = numero_de_fronteiras_por_territorio[i];
 
         // Itera sobre os NOMES das fronteiras que lemos do arquivo
         for (int j = 0; j < num_fronteiras; j++) {
-            // Obtém o nome da fronteira (ex: "Brasil")
+            // Obtem o nome da fronteira (ex: "Brasil")
             string nome_da_fronteira_str = fronteiras_por_territorio[i][j];
 
             // Limpa espaços em branco do nome da fronteira
             nome_da_fronteira_str.erase(0, nome_da_fronteira_str.find_first_not_of(" \t"));
             nome_da_fronteira_str.erase(nome_da_fronteira_str.find_last_not_of(" \t") + 1);
             
-            // Usa sua função auxiliar para encontrar o PONTEIRO do território com aquele nome
+            // Usa sua funcao auxiliar para encontrar o PONTEIRO do territorio com aquele nome
             Territorio* ponteiro_da_fronteira = encontrarTerritorioPorNome(nome_da_fronteira_str);
             
-            // Se o ponteiro foi encontrado, faz a ligação
+            // Se o ponteiro foi encontrado, faz a ligacao
             if (ponteiro_da_fronteira != nullptr) {
                 territorio_origem->adicionarFronteira(ponteiro_da_fronteira);
             }
@@ -787,8 +795,7 @@ void Jogo::carregarMapa(const std::string &arquivo_territorios)
     }
 
     // ========================================================================
-    // ETAPA 3: LIMPEZA DA MEMÓRIA TEMPORÁRIA
-    // Libera a memória alocada para os arrays temporários usados na leitura.
+    // ETAPA 3: LIMPEZA DA MEMORIA TEMPORARIA
     // ========================================================================
 
     // Limpa a matriz de strings de fronteiras
@@ -801,7 +808,7 @@ void Jogo::carregarMapa(const std::string &arquivo_territorios)
 
 
 // Metodo auxiliar para buscar um territorio no array pelo nome
-Territorio* Jogo::encontrarTerritorioPorNome(const std::string &nome) {
+Territorio* Jogo::encontrarTerritorioPorNome(const std::string &nome) const {
 
     // Para cada territorio do array
     for (int i = 0; i < _num_territorios; i++) {
@@ -891,7 +898,7 @@ void Jogo::distribuirExercitos(int n_exercitos, std::string nome_territorio, Jog
 
 
 // Metodo auxiliar para checar continentes dominados por um jogador
-bool Jogo::jogadorControlaContinente(Jogador* jogador, const std::string& nome_continente) {
+bool Jogo::jogadorControlaContinente(Jogador* jogador, const std::string& nome_continente) const {
     
     // Inicia ponteiro para o continente
     Continente* continente_alvo = nullptr;
@@ -923,12 +930,16 @@ bool Jogo::jogadorControlaContinente(Jogador* jogador, const std::string& nome_c
 
 
 // Metodo auxiliar para checar informacoes de certo territorio
-void Jogo::checarInfoTerritorios(const std::string& nome_territorio) {
+void Jogo::checarInfoTerritorios(const std::string& nome_territorio) const {
+
+    // Checa se existe o territorio com o nome informado
     Territorio* t = encontrarTerritorioPorNome(nome_territorio);
     if (t == nullptr) {
         std::cerr << "Territorio '" << nome_territorio << "' nao encontrado.\n";
         return;
     }
+
+    // Imprime informacoes pertinentes ao territorio
     std::cout << "--- Info: " << t->getNome() << " ---\n";
     std::cout << "  Dono: " << (t->getDono() ? t->getDono()->getNome() : "Ninguem") << "\n";
     std::cout << "  Tropas Terrestres: " << t->getExercitosTerrestres() << "\n";
@@ -940,7 +951,7 @@ void Jogo::checarInfoTerritorios(const std::string& nome_territorio) {
         if (f[i] != nullptr) { 
         std::cout << f[i]->getNome() << " ";
         } else {
-        std::cout << "[Fronteira NULA!] "; // Indica o problema
+        std::cout << "[Fronteira NULA!] "; // Indica possivel problema de leitura das fronteiras
         }
     }
     std::cout << "\n";
@@ -948,7 +959,7 @@ void Jogo::checarInfoTerritorios(const std::string& nome_territorio) {
 
 
 // Metodo auxiliar para encontrar jogador a partir do nome
-Jogador* Jogo::encontrarJogadorPorNome(const std::string &nome) {
+Jogador* Jogo::encontrarJogadorPorNome(const std::string &nome) const {
 
     // Para cada jogador do array
     for (int i = 0; i < _num_jogadores; i++) {
@@ -963,7 +974,7 @@ Jogador* Jogo::encontrarJogadorPorNome(const std::string &nome) {
 
 
 // Metodo auxiliar para encontrar continente a partir do nome
-Continente* Jogo::encontrarContinentePorNome(const std::string& nome_continente) {
+Continente* Jogo::encontrarContinentePorNome(const std::string& nome_continente) const {
     // Para cada continente do array
     for (int i = 0; i < _num_continentes; i++) {
 
@@ -978,24 +989,24 @@ Continente* Jogo::encontrarContinentePorNome(const std::string& nome_continente)
 
 
 // Metodo auxiliar para obter 's' ou 'n' do usuario
-char Jogo::obterConfirmacao(const std::string& prompt) {
+char Jogo::obterConfirmacao(const std::string& prompt) const {
     char resposta;
     while (true) {
         std::cout << prompt;
 
         // Tenta ler um char, pulando espaços em branco
         if (!(std::cin >> std::ws >> resposta)) {
-            std::cin.clear(); // Limpa o estado de erro (ex: Ctrl+D)
+            std::cin.clear(); // Limpa o estado de erro 
         }
 
-        // Limpa o resto da linha (ex: "im" de "sim" ou "abc")
+        // Limpa o resto da linha (ex: "im" de "sim")
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        // Converte para minúsculo para facilitar a verificação
+        // Converte para minusculo para facilitar a verificacao
         resposta = std::tolower(resposta);
 
         if (resposta == 's' || resposta == 'n') {
-            return resposta; // Sucesso! Retorna o char válido.
+            return resposta; // Retorna o char valido
         } else {
             std::cout << "Resposta inválida. Por favor, digite 's' ou 'n'." << std::endl;
         }
@@ -1004,26 +1015,25 @@ char Jogo::obterConfirmacao(const std::string& prompt) {
 
 
 // Metodo auxiliar para obter string valida do usuario
-std::string Jogo::obterString(const std::string& prompt) {
+std::string Jogo::obterString(const std::string& prompt) const {
     std::string entrada;
 
     while (true) {
         std::cout << prompt;
 
-        // 1. Limpa o buffer de entrada de lixo anterior (como '\n')
-        // 2. Lê a linha inteira até o próximo '\n'
+        // Limpa o buffer de entrada de lixo anterior (como '\n') e le a linha ate o proximo \n
         if (std::getline(std::cin >> std::ws, entrada)) {
             
-            // 3. Verifica se o usuário digitou algo
+            // Verifica se o usuario digitou algo
             if (!entrada.empty()) {
-                return entrada; // Sucesso! Retorna a string.
+                return entrada; // Retorna a string
             }
         }
 
         // Se a entrada estava vazia ou se houve um erro de stream
         std::cout << "A entrada não pode ser vazia. Tente novamente." << std::endl;
         
-        // Em caso de erro grave (raro), limpa o estado de erro
+        // Em caso de erro grave, limpa o estado de erro
         if (std::cin.fail()) {
             std::cin.clear();
             // Esvazia o buffer de qualquer coisa que tenha sobrado
@@ -1034,16 +1044,16 @@ std::string Jogo::obterString(const std::string& prompt) {
 
 
 // Metodo auxiliar para obter inteiro valido do usuario
-int Jogo::obterInt(const std::string& prompt) {
+int Jogo::obterInt(const std::string& prompt) const {
     int valor;
     while (true) {
         std::cout << prompt;
 
-        // Se a leitura for bem-sucedida (for um número)
+        // Se a leitura for bem-sucedida (for um numero)
         if (std::cin >> valor) {
-            // Limpa o buffer para caso o usuário tenha digitado "10abc"
+            // Limpa o buffer para caso o usuario tenha digitado "10abc"
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            return valor; // Sucesso!
+            return valor; // retorna inteiro valido
         } else {
             // Se falhou (digitou "abc")
             std::cout << "Entrada inválida. Por favor, digite um número." << std::endl;
@@ -1054,18 +1064,17 @@ int Jogo::obterInt(const std::string& prompt) {
 }
 
 
-// Metodo auxiliar para apresentar mapa de guerra e sumário de um jogador 
-void Jogo::verMapaDeGuerra(Jogador* jogador) {
+// Metodo auxiliar para apresentar mapa de guerra e sumario de um jogador 
+void Jogo::verMapaDeGuerra(Jogador* jogador) const {
     
-    // ===== PASSO 0: CHECAR SE ESTÁ ELIMINADO =====
-    // <<< Req 4: Adicionar se jogador foi eliminado ou não
+    // ===== CHECAR SE ESTA ELIMINADO =====
     if (jogador->estaEliminado()) {
         std::cout << "\n===== " << YELLOW << "STATUS DE " << jogador->getNome() << RESET << " =====\n";
         std::cout << "\n--- " << RED << "JOGADOR ELIMINADO" << RESET << " ---\n";
         return; // Não precisa mostrar o resto
     }
 
-    // ===== PASSO 1: CALCULAR OS TOTAIS =====
+    // ===== CALCULAR OS TOTAIS =====
     int num_territorios = jogador->getNumTerritorios();
     Territorio** territorios_do_jogador = jogador->getTerritorios();
     int total_exercitos = 0, total_aereos = 0, total_terrestres = 0;
@@ -1077,35 +1086,30 @@ void Jogo::verMapaDeGuerra(Jogador* jogador) {
         total_terrestres += territorios_do_jogador[i]->getExercitosTerrestres();
     }
 
-    // <<< Req 5: Calcular continentes conquistados
     for (int i = 0; i < _num_continentes; i++) {
         if (jogadorControlaContinente(jogador, _continentes[i]->getNome())) {
             continentes_conquistados++;
         }
     }
 
-    // ===== PASSO 2: EXIBIR O CABEÇALHO E O SUMÁRIO (Com todas as melhorias) =====
+    // ===== EXIBIR O CABEÇALHO E O SUMARIO =====
     std::cout << "\n===== " << YELLOW << "MAPA DE GUERRA E STATUS DE " << jogador->getNome() << RESET << " =====\n";
 
     std::cout << "\n--- " << YELLOW << "SUMARIO DAS FORCAS" << RESET << " ---\n";
-    // <<< Req 1: "Objetivo"
     std::cout << "  Objetivo:                 " << YELLOW << jogador->getObjetivo() << RESET << "\n";
-    // <<< Req 5: Contagens
     std::cout << "  Territorios:              " << GREEN << num_territorios << RESET << " de " << _num_territorios << "\n";
     std::cout << "  Continentes Conquistados: " << GREEN << continentes_conquistados << RESET << " de " << _num_continentes << "\n";
     std::cout << "  Exercito Total:           " << GREEN << total_exercitos << RESET << "\n";
     std::cout << "  Tropas Terrestres:        " << GREEN << total_terrestres << RESET << "\n";
     std::cout << "  Tropas Aereas:            " << GREEN << total_aereos << RESET << "\n";
 
-    // ===== PASSO 3: EXIBIR A LISTA DETALHADA (LAYOUT DE TABELA) =====
+    // ===== EXIBIR A TABELA DETALHADA =====
     std::cout << "\n--- " << YELLOW << "DETALHES DOS TERRITORIOS" << RESET << " ---\n";
 
     // Define larguras das colunas.
-    // <<< Req 6: Aumentei para 25 para nomes longos (como "Africa do Sul")
     const int NOME_WIDTH = 25; 
     const int TERRESTRE_WIDTH = 12;
     const int AEREO_WIDTH = 10;
-    // <<< Req 3: Nova coluna de fronteiras. Precisa ser MUITO larga.
     const int FRONTEIRA_WIDTH = 60; 
     const int TOTAL_WIDTH = NOME_WIDTH + TERRESTRE_WIDTH + AEREO_WIDTH + FRONTEIRA_WIDTH;
 
@@ -1113,7 +1117,7 @@ void Jogo::verMapaDeGuerra(Jogador* jogador) {
         Continente* cont = _continentes[i];
         bool imprimiu_cabecalho_continente = false;
 
-        // Itera sobre os territórios do jogador
+        // Itera sobre os territorios do jogador
         for (int j = 0; j < num_territorios; j++) {
             Territorio* terr = territorios_do_jogador[j];
             bool pertence = false;
@@ -1127,53 +1131,51 @@ void Jogo::verMapaDeGuerra(Jogador* jogador) {
 
             // Se pertence ao continente
             if (pertence) {
-                // Imprime o cabeçalho do continente (apenas uma vez)
+                // Imprime o cabecalho do continente (apenas uma vez)
                 if (!imprimiu_cabecalho_continente) {
                     imprimiu_cabecalho_continente = true;
                     
-                    // <<< Req 2: Status de Conquista
+                    // Status de Conquista
                     std::cout << "\n--- " << YELLOW << cont->getNome() << RESET;
                     if (jogadorControlaContinente(jogador, cont->getNome())) {
                         std::cout << GREEN << " (CONQUISTADO)" << RESET;
                     }
                     std::cout << " ---\n";
 
-                    // Imprime o cabeçalho da tabela
+                    // Imprime o cabecalho da tabela
                     std::cout << std::left 
                               << std::setw(NOME_WIDTH) << "Territorio" 
                               << std::setw(TERRESTRE_WIDTH) << "Terrestres" 
                               << std::setw(AEREO_WIDTH) << "Aereos"
-                              // <<< Req 3: Cabeçalho da Fronteira
                               << std::setw(FRONTEIRA_WIDTH) << "Fronteiras" 
                               << std::endl;
                     // Linha separadora
                     std::cout << std::setw(TOTAL_WIDTH) << std::setfill('-') << "" << std::setfill(' ') << std::endl;
                 }
 
-                // <<< Req 3: Construir a string de fronteiras
+                // String de fronteiras
                 std::string fronteiras_str = "";
                 Territorio** f = terr->getFronteiras();
                 int num_fronteiras = terr->getNumFronteiras();
                 for (int f_idx = 0; f_idx < num_fronteiras; f_idx++) {
                     if (f[f_idx] != nullptr) {
                         fronteiras_str += f[f_idx]->getNome();
-                        if (f_idx < num_fronteiras - 1) { // Adiciona vírgula se não for a última
+                        if (f_idx < num_fronteiras - 1) { // Adiciona virgula se nao for a ultima
                             fronteiras_str += ", ";
                         }
                     }
                 }
 
-                // Imprime a linha de dados do território
+                // Imprime a linha de dados do territorio
                 std::cout << std::left 
                           << CYAN << std::setw(NOME_WIDTH) << terr->getNome() << RESET
                           << GREEN << std::setw(TERRESTRE_WIDTH) << terr->getExercitosTerrestres() << RESET
                           << GREEN << std::setw(AEREO_WIDTH) << terr->getExercitosAereos() << RESET
-                          // <<< Req 3: Imprime a string de fronteiras
                           << WHITE << std::setw(FRONTEIRA_WIDTH) << fronteiras_str << RESET 
                           << std::endl;
             }
         }
-        // Pausa após cada continente, exceto o ultimo
+        // Pausa apos cada continente, exceto o ultimo
         if (i < _num_continentes - 1) {
         pressioneEnterParaContinuar();
         }
@@ -1182,9 +1184,9 @@ void Jogo::verMapaDeGuerra(Jogador* jogador) {
 }
 
 
-// Método para lidar com a eliminação de um jogador
+// Metodo para lidar com a eliminacao de um jogador
 void Jogo::executaEliminacao(Jogador* conquistador, Jogador* perdedor) {
-    // Verificação de segurança
+    // Verificacao de segurança
     if (perdedor == nullptr || conquistador == nullptr || perdedor->estaEliminado()) {
         return;
     }
@@ -1199,10 +1201,10 @@ void Jogo::executaEliminacao(Jogador* conquistador, Jogador* perdedor) {
 }
 
 
-// Método auxiliar para apresentar o mapa de guerra por partes
-void Jogo::pressioneEnterParaContinuar() {
+// Metodo auxiliar para apresentar o mapa de guerra por partes
+void Jogo::pressioneEnterParaContinuar() const {
     std::cout << "\n--- Pressione ENTER para continuar ---" << std::flush;
 
-    // Limpa o buffer de novo para garantir que a próxima leitura (obterString, etc.) funcione
+    // Limpa o buffer de novo para garantir que a proxima leitura (obterString, etc.) funcione
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }

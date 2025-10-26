@@ -4,15 +4,18 @@
 #include <string>
 
 
-Carta::Carta (std::string objetivo) :
+// Construtor
+Carta::Carta (const std::string& objetivo) :
     _objetivo(objetivo) {}
 
 
+// Retorna objetivo
 std::string Carta::getObjetivo() const {
     return _objetivo;
 }
 
 
-void Carta::setObjetivo(std::string objetivo) {
+// Atualiza objetivo da carta
+void Carta::setObjetivo(const std::string& objetivo) {
     _objetivo = objetivo;
 }

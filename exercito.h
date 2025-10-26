@@ -16,7 +16,7 @@ class Exercito {
         Jogador* getDono() const;     
         void setNome(std::string nome);
         void setDono(Jogador* jogador);
-        std::string rolarDado();   // gera dois números aleatórios, compara e retorna vencedor (ataque ou defesa)
+        std::string rolarDado();   // gera dois numeros aleatorios, compara e retorna vencedor (ataque ou defesa)
         virtual void ataque(Territorio* origem, Territorio* destino) = 0;
 };  
 

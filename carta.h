@@ -7,9 +7,9 @@ class Carta {
     private:
         std::string _objetivo;
     public:
-        Carta(std::string objetivo);
+        Carta(const std::string& objetivo);
         std::string getObjetivo() const;
-        void setObjetivo(std::string objetivo);
+        void setObjetivo(const std::string& objetivo);
 };  
 
 #endif

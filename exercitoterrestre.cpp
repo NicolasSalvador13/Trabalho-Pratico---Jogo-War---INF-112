@@ -57,7 +57,7 @@ void ExercitoTerrestre::ataque(Territorio* origem, Territorio* destino) {
             // Remove exercito do territorio na defesa
             destino->removerExercitos(1, destino, "terrestre");
         }
-        // Remove tropa aérea do territorio na defesa
+        // Remove tropa aerea do territorio na defesa
         else if (destino->getExercitosAereos() > 0) {
             std::cout << ">> Ataque bem-sucedido! O defensor perdeu 1 exercito aereo em " << destino->getNome() << ".\n";
 
@@ -78,7 +78,7 @@ void ExercitoTerrestre::ataque(Territorio* origem, Territorio* destino) {
             // Troca o dono do territorio
             destino->setDono(conquistador);
 
-            if (perdedor != nullptr) { // Garante que o território tinha um dono
+            if (perdedor != nullptr) { // Garante que o territorio tinha um dono
                 perdedor->removerTerritorio(destino); 
             }
             // Adiciona uma tropa no novo territorio conquistado

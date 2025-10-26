@@ -8,14 +8,9 @@
 
 // Construtor do Territorio, inicializando o atributo constante
 Territorio::Territorio (std::string nome, int num_fronteiras) :
-    _num_fronteiras(num_fronteiras) {
-        // Inicializa demais atributos
-        _nome = nome;
-        _exercitos_aereos = 0; 
-        _exercitos_terrestres = 0;
-        _dono = nullptr;
-        _fronteira_atual = 0;
-
+    _num_fronteiras(num_fronteiras), _nome(nome), _exercitos_aereos(0),
+    _exercitos_terrestres(0), _dono(nullptr), _fronteira_atual(0) 
+    {
         // Alocacao dinamica das fronteiras
         _fronteiras = new Territorio* [num_fronteiras];
         for (int i = 0; i < num_fronteiras; i++){
