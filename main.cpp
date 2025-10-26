@@ -81,7 +81,7 @@ int main() {
     // --- FIM DE JOGO ---
     std::cout << "\n\n===== " << YELLOW << "FIM DE JOGO!" << RESET << "=====\n";
     std::cout << BOLD_WHITE << "O jogador " << ganhador << " cumpriu seu objetivo e venceu a partida!\n";
-    std::cout << "Parabens!\n" << RESET;
+    std::cout << "Parabens!\n\n\n\n" << RESET;
 
     return 0;
 }

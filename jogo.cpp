@@ -468,7 +468,7 @@ void Jogo::posicionarReforcos(Jogador* jogador, int quantidade_total, const std:
 // Metodo auxiliar para coordenar fase de reforco
 void Jogo::faseDeReforco(Jogador* jogador_da_vez) {
     // Exibe informacoes do jogador da vez 
-    std::cout << "\n===== " << YELLOW << "NOVA RODADA" << RESET << "=====\n";
+    std::cout << "\n===== " << YELLOW << "NOVA RODADA" << RESET << " =====\n";
     std::cout << "E a vez do jogador: " << jogador_da_vez->getNome() << std::endl;
     std::cout << "Seu objetivo e: " << jogador_da_vez->getObjetivo() << std::endl;
     verMapaDeGuerra(jogador_da_vez);
@@ -941,16 +941,16 @@ void Jogo::checarInfoTerritorios(const std::string& nome_territorio) const {
     }
 
     // Imprime informacoes pertinentes ao territorio
-    std::cout << "--- Info: " << t->getNome() << " ---\n";
-    std::cout << "  Dono: " << (t->getDono() ? t->getDono()->getNome() : "Ninguem") << "\n";
-    std::cout << "  Tropas Terrestres: " << t->getExercitosTerrestres() << "\n";
-    std::cout << "  Tropas Aereas: " << t->getExercitosAereos() << "\n";
+    std::cout << "\n--- Info: " << CYAN << t->getNome() << RESET << " ---\n";
+    std::cout << "  Dono: " << CYAN << (t->getDono() ? t->getDono()->getNome() : "Ninguem") << RESET << "\n";
+    std::cout << "  Tropas Terrestres: " << CYAN << t->getExercitosTerrestres() << RESET << "\n";
+    std::cout << "  Tropas Aereas: " << CYAN << t->getExercitosAereos() << RESET << "\n";
 
     Territorio** f = t->getFronteiras();
     std::cout << "  Fronteiras: ";
     for (int i = 0; i < t->getNumFronteiras(); i++) {
         if (f[i] != nullptr) { 
-        std::cout << f[i]->getNome() << " ";
+        std::cout << CYAN << f[i]->getNome() << RESET << " ";
         } else {
         std::cout << "[Fronteira NULA!] "; // Indica possivel problema de leitura das fronteiras
         }
@@ -1204,7 +1204,7 @@ void Jogo::executaEliminacao(Jogador* conquistador, Jogador* perdedor) {
 
 // Metodo auxiliar para apresentar o mapa de guerra por partes
 void Jogo::pressioneEnterParaContinuar() const {
-    std::cout << "\n--- " << BOLD_WHITE << "ENTER para continuar" << RESET << "---" << std::flush;
+    std::cout << "\n--- " << BOLD_WHITE << "ENTER para continuar" << RESET << " ---" << std::flush;
 
     // Limpa o buffer de novo para garantir que a proxima leitura (obterString, etc.) funcione
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
